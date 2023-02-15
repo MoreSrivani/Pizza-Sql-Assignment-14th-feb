@@ -1,0 +1,14 @@
+create table customer_orders(cust_name varchar(20),order_id varchar(10),status varchar(50));
+alter table customer_orders rename column cust_name to customer_name;
+insert into customer_orders values('John','J1','DELIVERED'),('John','J2','DELIVERED'),
+('David','D1','DELIVERED'),('David','D3','CREATED')
+,('Smith','S1','SUBMITTED'),('KRISH','K1','CREATED');
+SELECT * FROM CUSTOMER_ORDERS;
+select customer_name,
+CASE
+   when status='DELIVERED'  then 'COMPLETED'
+   when  status='DELIVERED' and status!='CREATED' THEN 'IN PROGRESS'
+   when status='SUBMITTED' and status!='DELIVERED' THEN 'AWAITING PROGRESS'
+ else 'AWAITING SUBMISSION'
+end as FINAL_STATUS
+FROM customer_orders group by customer_name order by customer_name;
